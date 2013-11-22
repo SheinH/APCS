@@ -1,7 +1,7 @@
 /* Shein Htike
    Period 8
    HW#27
-   2013/11/18
+   2013/11/19
 */
 public class Rational{
     // Phase 1
