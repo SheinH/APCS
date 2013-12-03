@@ -1,0 +1,110 @@
+/*
+  Shein Htike
+  Period 8
+  HW#34
+  2012-11-30
+*/
+public class BinSearch {
+
+
+    /*==================================================
+      int binSearch(int[],int) -- searches an array of ints for target int
+      pre:  input array is sorted in ascending order
+      post: returns index of target, or returns -1 if target not found
+      ==================================================*/
+    public static int linSearch ( Comparable[] a, Comparable target ) {
+	for(int x = 0;x < a.length;x++){
+	    if (a[x].equals(target))
+		return x;
+	}
+	return -1;
+    }
+    public static int binSearch ( Comparable[] a, Comparable target ) {
+	//uncomment exactly 1 of the 2 stmts below:
+	//return binSearchIter( a, target, 0, a.length-1 );
+	return binSearchRec( a, target, 0, a.length-1 );
+    }
+
+
+    public static int binSearchRec( Comparable[] a, Comparable target, int lo, int hi ) {
+	int x = lo + (hi - lo)/2;
+	if (lo == hi && ! (target.equals(a[x])))
+	    return -1;
+	else if (target.compareTo(a[x]) < 0)
+	    return binSearchRec(a,target,lo,x - 1);
+	else if (target.compareTo(a[x]) > 0)
+	    return binSearchRec(a,target,x + 1,hi);
+	else
+	    return x;
+    }
+
+
+    public static int binSearchIter( Comparable[] a, Comparable target, int lo, int hi ) {
+	int x;
+	for(x  = lo + (hi - lo) / 2;!a[x].equals(target);x = lo + (hi - lo) / 2){
+	    if (lo == hi && ! (target.equals(a[x])))
+		return -1;
+	    else if (target.compareTo(a[x]) < 0)
+		lo = x + 1;
+	    else if (target.compareTo(a[x]) > 0)
+		hi = x - 1;
+	}
+	return x;
+    }
+
+
+
+    //tell whether an array is sorted in ascending order
+    private static boolean isSorted( Comparable[] arr ) {
+	boolean ret = true;
+	for(int x = 1;x != arr.length; x++){
+	    if (arr[x].compareTo(arr[x - 1]) < 1)
+		ret = false;
+	}
+	return ret;
+    }
+
+
+    // utility/helper fxn to display contents of an array of Objects
+    private static void printArray( Comparable[] arr ) {
+	String output = "[ "; 
+
+	for( Comparable i : arr )
+	    output += i + ", ";
+
+	output = output.substring( 0, output.length()-2 ) + " ]";
+
+	System.out.println( output );
+    }
+
+
+    //main method for testing
+    public static void main ( String[] args ) {
+
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	System.out.println("\nNow testing binSearch on binary array...");
+	
+
+	//Declare and initialize array of ints
+	Comparable[] iArr = { new Hexadecimal(2), new Hexadecimal(4), new Hexadecimal(6), new Hexadecimal(8), new Hexadecimal (6), new Hexadecimal(42) };
+	printArray( iArr );
+	System.out.println( "sorted? -- " + isSorted(iArr) );
+
+	Comparable[] iArr2 = { new Hexadecimal(2), new Hexadecimal(4), new Hexadecimal(6), new Hexadecimal(8), new Hexadecimal(13), new Hexadecimal(42) };
+	printArray( iArr2 );
+	System.out.println( "sorted? -- " + isSorted(iArr2) );
+
+	//search for 6 in array 
+	System.out.println( linSearch(iArr,new Hexadecimal(6)) );
+
+	//search for 43 in array 
+	System.out.println( linSearch(iArr,new Hexadecimal(43)) );
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    }//end main()
+
+}//end class BinSearch
